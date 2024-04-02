@@ -16,3 +16,9 @@ export type GitHubUser = {
   login?: string; // GitHub username
   avatar_url?: string;
 };
+
+export type GitHubIssueComment = {
+  id?: number;
+  user?: GitHubUser;
+  body?: string;
+};

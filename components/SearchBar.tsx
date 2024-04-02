@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/search-bar-input";
 
 export default function SearchBar() {
   const router = useRouter();
@@ -13,18 +12,16 @@ export default function SearchBar() {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        router.push(`${search}`);
+        router.push(`/${search}/issue`);
       }}
-      className="flex w-full max-w-sm items-center space-x-2"
+      className=" w-full max-w-md "
     >
       <Input
-        type="search"
+        type="text"
         placeholder="Search user"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      {/* Since the button is of type "submit", clicking it or pressing Enter will submit the form */}
-      <Button type="submit">Search</Button>
     </form>
   );
 }

@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { GitHubIssue, GitHubRepo, GitHubUser } from "@/lib/types/types";
 import { getErrorMessage } from "@/lib/utils";
+import { getToken } from "next-auth/jwt";
 
 // Helper function to retrieve the GitHub access token from the session.
 async function getSessionToken() {
@@ -77,57 +78,91 @@ export async function getRepoIssues(
 
 // Retrieves a specific issue from a repository.
 export async function getIssue({ owner, repo, number }: GitHubIssue) {
-  return await fetchGitHubAPI(`/repos/${owner}/${repo}/issues/${number}`);
+  try {
+    const issue = await fetchGitHubAPI(
+      `/repos/${owner}/${repo}/issues/${number}`
+    );
+    return { issue };
+  } catch (error) {
+    return { getIssueError: getErrorMessage(error) };
+  }
 }
 
 // Fetches comments for a specific issue in a repository.
 export async function getIssueComments({ owner, repo, number }: GitHubIssue) {
-  return await fetchGitHubAPI(
-    `/repos/${owner}/${repo}/issues/${number}/comments`
-  );
+  try {
+    const comments = await fetchGitHubAPI(
+      `/repos/${owner}/${repo}/issues/${number}/comments`
+    );
+    return { comments };
+  } catch (error) {
+    return { getCommentsError: getErrorMessage(error) };
+  }
 }
 
 // Creates an issue in a repository.
-export async function createIssue({ owner, repo, title, body }: GitHubIssue) {
-  const token = await getSessionToken();
-  return await fetchGitHubAPI(`/repos/${owner}/${repo}/issues`, {
-    method: "POST",
-    body: JSON.stringify({ title, body }),
-    headers: {
-      "Content-Type": "application/json", // "Content-Type" 告訴伺服器你正在發送什麼類型的數據，"application/json" 表示你正在發送 JSON 數據
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export async function createIssue(
+  { owner, repo, title, body }: GitHubIssue,
+  token: string
+) {
+  // const token = await getSessionToken();
+  try {
+    const newIssue = await fetchGitHubAPI(`/repos/${owner}/${repo}/issues`, {
+      method: "POST",
+      body: JSON.stringify({ title, body }),
+      headers: {
+        "Content-Type": "application/json", // "Content-Type" 告訴伺服器你正在發送什麼類型的數據，"application/json" 表示你正在發送 JSON 數據
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { newIssue };
+  } catch (error) {
+    return { createIssueError: getErrorMessage(error) };
+  }
 }
 
 // Updates an issue in a repository.
-export async function updateIssue({
-  owner,
-  repo,
-  number,
-  title,
-  body,
-}: GitHubIssue) {
-  const token = await getSessionToken();
-  return await fetchGitHubAPI(`/repos/${owner}/${repo}/issues/${number}`, {
-    method: "PATCH",
-    body: JSON.stringify({ title, body }),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export async function updateIssue(
+  { owner, repo, number, title, body }: GitHubIssue,
+  token: string
+) {
+  // const token = await getSessionToken();
+  try {
+    const updateIssue = await fetchGitHubAPI(
+      `/repos/${owner}/${repo}/issues/${number}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ title, body }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return { updateIssue };
+  } catch (error) {
+    return { updateIssueError: getErrorMessage(error) };
+  }
 }
 
 // Closes an issue in a repository.
-export async function closeIssue({ owner, repo, number }: GitHubIssue) {
-  const token = await getSessionToken();
-  return await fetchGitHubAPI(`/repos/${owner}/${repo}/issues/${number}`, {
-    method: "PATCH",
-    body: JSON.stringify({ state: "closed" }),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export async function closeIssue(
+  { owner, repo, number }: GitHubIssue,
+  token: string
+) {
+  // const token = await getSessionToken();
+  // const token = await getToken({ req: authOptions });
+  try {
+    await fetchGitHubAPI(`/repos/${owner}/${repo}/issues/${number}`, {
+      method: "PATCH",
+      body: JSON.stringify({ state: "closed" }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { success: true };
+  } catch (error) {
+    return { success: false };
+  }
 }

@@ -12,6 +12,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.SECRET,
+  session: { strategy: "jwt" },
   callbacks: {
     // Upon user login, captures and save the access token returned by GitHub to the JWT.
     async jwt({ token, account }) {

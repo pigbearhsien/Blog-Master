@@ -35,7 +35,6 @@ export default function LoadMore() {
   // the ref ensures that every time the spinner component is in the view, it would call the useEffect
   useEffect(() => {
     if (inView) {
-      console.log("scrolled to the end");
       loadMoreIssues();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,7 +52,7 @@ export default function LoadMore() {
       <>
         <IssueList issues={issues} />
         {loading && (
-          <div className={`flex justify-center items-center`} ref={ref}>
+          <div className={"flex justify-center items-center"} ref={ref}>
             <Spinner />
           </div>
         )}
