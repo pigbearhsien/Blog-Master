@@ -40,7 +40,7 @@ export default async function IssuePage({
   }
 
   return (
-    <div className=" px-36 pt-8">
+    <div className="container flex-1 items-start px-72 py-12">
       <Editor
         initialTitle={undefined}
         initialBody={undefined}

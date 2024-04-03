@@ -6,11 +6,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
-import "@mantine/core/styles.css";
+// import "@mantine/core/styles.css";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import { createIssue, updateIssue } from "@/lib/github-api";
+import "./styles/Viewer.css";
+import { Separator } from "./ui/separator";
+import { Textarea } from "./ui/textarea";
+import { Label } from "./ui/label";
 
 type EditorProps = {
   initialTitle: string | undefined;
@@ -23,11 +27,12 @@ export default function Editor({
   initialBody,
   number,
 }: EditorProps) {
+  const editor = useCreateBlockNote();
+
   const { data: session } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentRepo = searchParams.get("repo") as string;
-  const editor = useCreateBlockNote();
   const [title, setTitle] = useState<string | undefined>(initialTitle);
 
   // For initialization; on mount, convert the initial Markdown to blocks and replace the default editor's content
@@ -41,28 +46,16 @@ export default function Editor({
     loadInitialHTML();
   }, [editor, initialBody]);
 
-  const checkCharacter = () => {
-    let word = "";
-    editor.document.forEach((block) => {
-      block.content?.forEach((content) => {
-        word += content.text;
-      });
-    });
-    if (word.length < 30) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
   const handleCreateIssue = async () => {
-    const ok = checkCharacter();
-    if (!ok) {
+    const markdownBody = await editor.blocksToMarkdownLossy(editor.document);
+    if (markdownBody.length < 30) {
       toast.error("Please enter at least 30 characters");
       return;
     }
-
-    const markdownBody = await editor.blocksToMarkdownLossy(editor.document);
+    if (!title) {
+      toast.error("Please enter a title");
+      return;
+    }
     const { newIssue, createIssueError } = await createIssue(
       {
         owner: session?.user?.name as string,
@@ -85,13 +78,15 @@ export default function Editor({
   };
 
   const handleUpdateIssue = async () => {
-    const ok = checkCharacter();
-    if (!ok) {
+    const markdownBody = await editor.blocksToMarkdownLossy(editor.document);
+    if (markdownBody.length < 30) {
       toast.error("Please enter at least 30 characters");
       return;
     }
-
-    const markdownBody = await editor.blocksToMarkdownLossy(editor.document);
+    if (!title) {
+      toast.error("Please enter a title");
+      return;
+    }
     const { updateIssueError } = await updateIssue(
       {
         owner: session?.user?.name as string,
@@ -123,22 +118,35 @@ export default function Editor({
             handleCreateIssue();
           }
         }}
-        className="flex w-full items-center"
+        className=" "
       >
-        Title:
-        <Input
-          type="text"
-          className="w-1/2 mr-auto ml-2"
-          placeholder="Enter title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        {/* Since the button is of type "submit", clicking it or pressing Enter will submit the form */}
-        <Button type="submit">Save</Button>
+        <div className="w-fit ml-auto">
+          <Button type="submit" className="bg-[#1A8917] hover:bg-[#1A8917]/90">
+            Save
+          </Button>
+          <Button
+            type="button"
+            className="ml-4"
+            variant={"outline"}
+            onClick={() => router.back()}
+          >
+            Cancel
+          </Button>
+        </div>
+        <div>
+          <Label htmlFor="Title">Title</Label>
+          <Textarea
+            id="Title"
+            aria-multiline
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Title"
+            className="h-auto my-4 text-4xl font-bold !outline-none !border-none !ring-0 shadow-none px-0"
+          />
+        </div>
       </form>
-      <br />
-      <BlockNoteView editor={editor} />
+      <Separator className="my-4" />
+      <BlockNoteView editor={editor} data-theming-css-demo />
     </>
   );
 }

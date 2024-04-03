@@ -15,7 +15,9 @@ export default function RepoList({ repos, selectedRepo }: RepoListProps) {
     <section className="flex flex-col">
       {repos?.length === 0 ? (
         // 如果 reposCanHaveIssues 陣列為空，則顯示沒有找到 repos 的訊息
-        <p className="mx-auto mt-2 font-light">No public repositories yet.</p>
+        <p className="mx-auto mt-2  text-lg font-semibold">
+          No public repositories yet.
+        </p>
       ) : (
         repos.map((repo: GitHubRepo) => (
           <Link

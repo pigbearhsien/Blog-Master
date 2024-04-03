@@ -4,6 +4,7 @@ import { ChangeEvent, useCallback, useEffect } from "react";
 import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
+import "./styles/Viewer.css";
 
 export default function Viewer({ body }: { body: string | undefined }) {
   // Creates a new editor instance.
@@ -19,5 +20,12 @@ export default function Viewer({ body }: { body: string | undefined }) {
   }, [editor, body]);
 
   // Renders the editor instance using a React component.
-  return <BlockNoteView editor={editor} editable={false} />;
+  return (
+    <BlockNoteView
+      editor={editor}
+      editable={false}
+      data-theming-css-demo
+      data-theming-css-variables-demo
+    />
+  );
 }

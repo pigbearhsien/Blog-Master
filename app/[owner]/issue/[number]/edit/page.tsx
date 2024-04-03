@@ -2,7 +2,11 @@ import React from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { getIssue } from "@/lib/github-api";
-import Editor from "@/components/IssueEditor";
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(() => import("@/components/IssueEditor"), {
+  ssr: false,
+});
 
 export default async function IssuePage({
   params,
@@ -30,15 +34,12 @@ export default async function IssuePage({
   }
 
   return (
-    <>
-      <p>You are editing {issue.number}</p>
-      <div className=" px-36 pt-8">
-        <Editor
-          initialTitle={issue.title}
-          initialBody={issue.body}
-          number={params.number}
-        />
-      </div>
-    </>
+    <div className="container flex-1 items-start px-72 py-12">
+      <Editor
+        initialTitle={issue.title}
+        initialBody={issue.body}
+        number={params.number}
+      />
+    </div>
   );
 }

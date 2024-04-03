@@ -49,8 +49,8 @@ export default function IssueActionButton({ number }: { number: number }) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="w-7 !outline-none ">
-        <DotsHorizontalIcon className="w-7 h-7" />
+      <DropdownMenuTrigger className="w-7 h-7 !outline-none !mt-0 hover:bg-accent hover:text-accent-foreground">
+        <DotsHorizontalIcon className="w-7" />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem

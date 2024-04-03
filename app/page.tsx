@@ -22,12 +22,19 @@ export default async function WelcomePage() {
         <Image
           src="/logo.png"
           alt="Logo"
-          width={20}
-          height={20}
-          className=" opacity-80"
+          width={25}
+          height={25}
+          className="inline-flex mr-2"
+        />
+        <Image
+          src="/BlogMaster.png"
+          alt="Logo"
+          width={100}
+          height={30}
+          className="inline-flex"
         />
       </div>
-      <div className="absolute -z-10 p-4 right-0 ">
+      <div className="absolute z-10 p-4 right-0 ">
         <Link href="https://github.com/pigbearhsien/blog-master">
           <Button variant={"outline"} size={"icon"}>
             <GitHubLogoIcon className="h-4 w-4" />

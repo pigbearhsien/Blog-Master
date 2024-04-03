@@ -52,7 +52,7 @@ export default function LoadMore() {
       <>
         <IssueList issues={issues} />
         {loading && (
-          <div className={"flex justify-center items-center"} ref={ref}>
+          <div className={"flex justify-center items-center mt-4"} ref={ref}>
             <Spinner />
           </div>
         )}

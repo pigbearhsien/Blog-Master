@@ -10,7 +10,11 @@ import { redirect } from "next/navigation";
 import LoadMore from "@/components/LoadMore";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ChevronRightIcon, PlusIcon } from "@radix-ui/react-icons";
+import {
+  ChevronRightIcon,
+  ExternalLinkIcon,
+  PlusIcon,
+} from "@radix-ui/react-icons";
 
 export default async function MainPage({
   params,
@@ -58,8 +62,8 @@ export default async function MainPage({
   );
 
   return (
-    <div className="container flex-1 items-start grid grid-cols-3 gap-10 px-28">
-      <aside className="fixed top-18 z-30  hidden h-[calc(100vh-4rem)] w-full shrink-0 md:sticky md:block py-8">
+    <div className="container flex-1 items-start grid grid-cols-3 gap-10 px-20">
+      <aside className="fixed top-16 z-30  hidden h-[calc(100vh-4rem)] w-full shrink-0 md:sticky md:block py-8">
         <div className="relative overflow-y-scroll h-full ">
           <OwnerSection name={params.owner} avatarUrl={userInfo.avatar_url} />
           <RepoList repos={reposCanHaveIssues} selectedRepo={selectedRepo} />
@@ -68,10 +72,15 @@ export default async function MainPage({
       <section className="col-span-2 relative py-8 px-2 ">
         {selectedRepo && (
           <>
-            <div className="flex items-center gap-2 mb-4 h-8">
-              <span className="font-light text-stone-500">{params.owner} </span>
-              <ChevronRightIcon className=" inline-flex" />
+            <div className="flex items-center mb-4 h-8">
+              <span className="font-light text-slate-500">{params.owner} </span>
+              <ChevronRightIcon className=" inline-flex mx-2" />
               <span>{selectedRepo}</span>
+              <Link href={`https://github.com/${params.owner}/${selectedRepo}`}>
+                <Button variant={"ghost"} size={"icon"}>
+                  <ExternalLinkIcon />
+                </Button>
+              </Link>
               {session?.user?.name === params.owner && (
                 <Link
                   href={`/${params.owner}/issue/new?repo=${selectedRepo}`}
@@ -85,7 +94,7 @@ export default async function MainPage({
               )}
             </div>
             {issues?.length === 0 ? (
-              <p>No issues found.</p>
+              <p className=" text-lg font-semibold ">No issues found.</p>
             ) : (
               <>
                 <IssueList issues={issues} />

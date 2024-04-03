@@ -27,10 +27,12 @@ async function fetchGitHubAPI(
     headers?: Record<string, string>;
   } = {} // 如果在呼叫函數時沒有提供 options 參數，那麼 options 將會是一個空物件。
 ) {
+  // const token = await getSessionToken();
   try {
     const headers = {
       Accept: "application/vnd.github+json",
       ...options.headers,
+      // Authorization: `Bearer ${token}`,
     };
 
     const response = await fetch(`https://api.github.com${endpoint}`, {
@@ -52,7 +54,7 @@ async function fetchGitHubAPI(
 // Fetches public repositories for the specified user.
 export async function getUser({ owner }: GitHubIssue) {
   try {
-    const repos = await fetchGitHubAPI(`/users/${owner}/repos`);
+    const repos = await fetchGitHubAPI(`/users/${owner}/repos?per_page=100`);
     const userInfo = await fetchGitHubAPI(`/users/${owner}`);
     return { repos, userInfo };
   } catch (error) {

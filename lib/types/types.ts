@@ -4,6 +4,7 @@ export type GitHubIssue = {
   number?: number;
   title?: string;
   body?: string;
+  created_at?: string;
 };
 
 export type GitHubRepo = {
@@ -21,4 +22,5 @@ export type GitHubIssueComment = {
   id?: number;
   user?: GitHubUser;
   body?: string;
+  created_at?: string;
 };

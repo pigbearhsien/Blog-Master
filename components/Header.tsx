@@ -5,21 +5,23 @@ import Image from "next/image";
 import SignButton from "./SighButton";
 import SearchBar from "./SearchBar";
 import { Button } from "@/components/ui/button";
-import { CardStackIcon } from "@radix-ui/react-icons";
+import { CardStackIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export default async function Header() {
   const session = await getServerSession(authOptions);
 
   return (
     <div className="px-8 flex h-16 items-center">
-      <Link href="/" className="mr-6">
-        <Image
-          src="/logo.png"
-          alt="Logo"
-          width={20}
-          height={20}
-          className=" opacity-80"
-        />
+      <Link href="/" className="mr-2">
+        <Image src="/logo.png" alt="Logo" width={25} height={25} />
+      </Link>
+      <Link href="/" className="mr-2">
+        <Image src="/BlogMaster.png" alt="Logo" width={100} height={30} />
+      </Link>
+      <Link href="https://github.com/pigbearhsien/blog-master" className="mr-4">
+        <Button variant={"outline"} size={"icon"}>
+          <GitHubLogoIcon className="h-4 w-4" />
+        </Button>
       </Link>
       <SearchBar />
       <section className="ml-auto flex items-center gap-1">
