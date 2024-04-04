@@ -40,7 +40,11 @@ export default async function IssuePage({
   });
 
   if (getIssueError) {
-    throw new Error(getIssueError);
+    throw new Error("Issue not found.");
+  }
+
+  if (issue && issue.state !== "open") {
+    throw new Error("Issue is closed.");
   }
 
   const { comments, getCommentsError } = await getIssueComments({
@@ -63,7 +67,7 @@ export default async function IssuePage({
   };
 
   return (
-    <div className="container flex-1 items-start px-72 py-12">
+    <article className="container flex-1 items-start px-72 py-12">
       <p className=" font-bold text-5xl">{issue?.title}</p>
       <section className="flex items-center  py-9">
         <Image
@@ -80,10 +84,16 @@ export default async function IssuePage({
                 {params.owner}
               </span>
             </Link>
-            <Link href={`https://github.com/${params.owner}`}>
-              <Button variant={"ghost"} size={"icon"}>
-                <ExternalLinkIcon />
-              </Button>
+            <Link
+              href={`https://github.com/${params.owner}`}
+              passHref
+              legacyBehavior
+            >
+              <a target="_blank" rel="noopener noreferrer">
+                <Button variant={"ghost"} size={"icon"}>
+                  <ExternalLinkIcon />
+                </Button>
+              </a>
             </Link>
           </div>
 
@@ -101,10 +111,14 @@ export default async function IssuePage({
           <CommentSheet comments={comments} />
           <Link
             href={`https://github.com/${params.owner}/${selectedRepo}/issues/${params.number}`}
+            passHref
+            legacyBehavior
           >
-            <Button variant={"ghost"} size={"icon"}>
-              <ExternalLinkIcon />
-            </Button>
+            <a target="_blank" rel="noopener noreferrer">
+              <Button variant={"ghost"} size={"icon"}>
+                <ExternalLinkIcon />
+              </Button>
+            </a>
           </Link>
 
           {session?.user?.name === params.owner && (
@@ -115,6 +129,6 @@ export default async function IssuePage({
       <Separator className="mb-6" />
 
       <Viewer body={issue?.body} />
-    </div>
+    </article>
   );
 }

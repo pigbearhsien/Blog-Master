@@ -18,27 +18,31 @@ export default async function WelcomePage() {
 
   return (
     <section className="flex flex-col items-center relative gap-12">
-      <div className="absolute -z-10 p-4 left-0 ">
+      <div className="absolute p-4 left-0 flex items-center ">
         <Image
           src="/logo.png"
           alt="Logo"
           width={25}
           height={25}
-          className="inline-flex mr-2"
+          className="mr-2"
         />
         <Image
           src="/BlogMaster.png"
           alt="Logo"
           width={100}
           height={30}
-          className="inline-flex"
+          className=" mr-2"
         />
-      </div>
-      <div className="absolute z-10 p-4 right-0 ">
-        <Link href="https://github.com/pigbearhsien/blog-master">
-          <Button variant={"outline"} size={"icon"}>
-            <GitHubLogoIcon className="h-4 w-4" />
-          </Button>
+        <Link
+          href="https://github.com/pigbearhsien/blog-master"
+          passHref
+          legacyBehavior
+        >
+          <a target="_blank" rel="noopener noreferrer">
+            <Button variant={"outline"} size={"icon"}>
+              <GitHubLogoIcon className="h-4 w-4" />
+            </Button>
+          </a>
         </Link>
       </div>
       <Image

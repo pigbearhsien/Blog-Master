@@ -61,16 +61,16 @@ export default function IssueActionButton({ number }: { number: number }) {
             );
           }}
         >
-          Edit
+          Edit issue
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="font-red-500"
+          className="text-red-500"
           onClick={(e) => {
             e.stopPropagation();
             handleDeleteIssue();
           }}
         >
-          Delete
+          Delete issue
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

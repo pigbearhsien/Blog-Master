@@ -18,15 +18,21 @@ export default async function Header() {
       <Link href="/" className="mr-2">
         <Image src="/BlogMaster.png" alt="Logo" width={100} height={30} />
       </Link>
-      <Link href="https://github.com/pigbearhsien/blog-master" className="mr-4">
-        <Button variant={"outline"} size={"icon"}>
-          <GitHubLogoIcon className="h-4 w-4" />
-        </Button>
+      <Link
+        href="https://github.com/pigbearhsien/blog-master"
+        passHref
+        legacyBehavior
+      >
+        <a target="_blank" rel="noopener noreferrer" className="mr-4">
+          <Button variant={"outline"} size={"icon"}>
+            <GitHubLogoIcon className="h-4 w-4" />
+          </Button>
+        </a>
       </Link>
       <SearchBar />
       <section className="ml-auto flex items-center gap-1">
         {session && (
-          <Link href={`/${session.user.name}/issue`}>
+          <Link href="/">
             <Button variant={"ghost"}>
               <CardStackIcon className="mr-2 h-5 w-5" />
               My Issues

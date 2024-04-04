@@ -30,18 +30,19 @@ export default async function MainPage({
     owner: params.owner,
   });
 
-  if (getUserError) {
-    throw new Error(getUserError);
+  if (!repos || getUserError) {
+    throw new Error("User not found.");
   }
 
   const reposCanHaveIssues = repos
-    .filter((repo: GitHubRepo) => repo.has_issues) // 篩選 repos 陣列，只保留每個物件的 has_issue 屬性為 true 的物件，不然會沒辦法 create issue
+    .filter(
+      (repo: GitHubRepo) => repo.has_issues !== undefined && repo.has_issues
+    )
     .sort(
-      (a: { open_issues: any }, b: { open_issues: any }) =>
+      (a: GitHubRepo, b: GitHubRepo) =>
         (b.open_issues ?? 0) - (a.open_issues ?? 0)
-    ); // 將篩選後的 repos 陣列按照 issues 的數量排序
+    );
 
-  // 預設選擇的 repo 是 reposCanHaveIssues 陣列的第一個物件
   if (reposCanHaveIssues.length > 0 && !selectedRepo)
     redirect(`?repo=${reposCanHaveIssues[0].name}`);
 
@@ -76,10 +77,16 @@ export default async function MainPage({
               <span className="font-light text-slate-500">{params.owner} </span>
               <ChevronRightIcon className=" inline-flex mx-2" />
               <span>{selectedRepo}</span>
-              <Link href={`https://github.com/${params.owner}/${selectedRepo}`}>
-                <Button variant={"ghost"} size={"icon"}>
-                  <ExternalLinkIcon />
-                </Button>
+              <Link
+                href={`https://github.com/${params.owner}/${selectedRepo}`}
+                passHref
+                legacyBehavior
+              >
+                <a target="_blank" rel="noopener noreferrer">
+                  <Button variant={"ghost"} size={"icon"}>
+                    <ExternalLinkIcon />
+                  </Button>
+                </a>
               </Link>
               {session?.user?.name === params.owner && (
                 <Link

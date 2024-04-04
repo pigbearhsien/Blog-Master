@@ -54,7 +54,18 @@ async function fetchGitHubAPI(
 // Fetches public repositories for the specified user.
 export async function getUser({ owner }: GitHubIssue) {
   try {
-    const repos = await fetchGitHubAPI(`/users/${owner}/repos?per_page=100`);
+    let page = 1;
+    let repos: GitHubRepo[] = [];
+    while (true) {
+      const newRepos = await fetchGitHubAPI(
+        `/users/${owner}/repos?per_page=100&page=${page}`
+      );
+      repos = repos.concat(newRepos);
+      if (newRepos.length < 100) {
+        break;
+      }
+      page++;
+    }
     const userInfo = await fetchGitHubAPI(`/users/${owner}`);
     return { repos, userInfo };
   } catch (error) {

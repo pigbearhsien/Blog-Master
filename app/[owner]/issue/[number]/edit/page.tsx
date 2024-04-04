@@ -20,7 +20,7 @@ export default async function IssuePage({
 
   // 只能在登入後編輯自己的 issue
   if (params.owner !== session?.user?.name) {
-    throw new Error("You are not authorized to edit this issue");
+    throw new Error("You are not authorized.");
   }
 
   const { issue, getIssueError } = await getIssue({
@@ -30,16 +30,20 @@ export default async function IssuePage({
   });
 
   if (getIssueError) {
-    throw new Error(getIssueError);
+    throw new Error("Issue not found.");
+  }
+
+  if (issue && issue.state !== "open") {
+    throw new Error("Issue is closed.");
   }
 
   return (
-    <div className="container flex-1 items-start px-72 py-12">
+    <article className="container flex-1 items-start px-72 py-12">
       <Editor
         initialTitle={issue.title}
         initialBody={issue.body}
         number={params.number}
       />
-    </div>
+    </article>
   );
 }

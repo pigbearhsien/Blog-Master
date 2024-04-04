@@ -27,6 +27,10 @@ export default async function IssuePage({
   const { repos } = await getUser({
     owner: params.owner,
   });
+
+  if (!repos) {
+    throw new Error("Please select a valid repository to create an issue.");
+  }
   const reposCanHaveIssues = repos?.filter(
     (repo: GitHubRepo) => repo.has_issues
   );
@@ -36,7 +40,7 @@ export default async function IssuePage({
     !selectedRepo ||
     !reposCanHaveIssues.find((repo: GitHubRepo) => repo.name === selectedRepo)
   ) {
-    throw new Error("Cannot create issue");
+    throw new Error("Please select a valid repository to create an issue.");
   }
 
   return (

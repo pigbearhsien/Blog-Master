@@ -22,13 +22,15 @@ export default async function OwnerSection({
         />
       ) : null}
       <p className=" font-semibold text-lg">{name}</p>
-      <Link href={`https://github.com/${name}`}>
-        <Button
-          className="mb-2 text-[#1A8917] hover:text-[#1A8917] border-[#1A8917] hover:border-[#1A8917]"
-          variant={"outline"}
-        >
-          View GitHub
-        </Button>
+      <Link href={`https://github.com/${name}`} passHref legacyBehavior>
+        <a target="_blank" rel="noopener noreferrer">
+          <Button
+            className="mb-2 text-[#1A8917] hover:text-[#1A8917] border-[#1A8917] hover:border-[#1A8917]"
+            variant={"outline"}
+          >
+            View GitHub
+          </Button>
+        </a>
       </Link>
     </section>
   );
