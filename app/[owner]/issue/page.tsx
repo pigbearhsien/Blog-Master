@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { getUser, getRepoIssues } from "@/lib/github-api";
@@ -15,6 +16,10 @@ import {
   ExternalLinkIcon,
   PlusIcon,
 } from "@radix-ui/react-icons";
+
+export const metadata: Metadata = {
+  title: "Issues",
+};
 
 export default async function MainPage({
   params,

@@ -9,7 +9,10 @@ import Provider from "@/lib/context/client-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Blog Master",
+  title: {
+    default: "Blog Master",
+    template: "%s - Blog Master",
+  },
   description: "A Blog Platform Powered by GitHub Issues.",
 };
 
