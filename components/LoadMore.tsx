@@ -1,20 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "next/navigation";
 import { useInView } from "react-intersection-observer";
 import { Spinner } from "@/components/ui/spinner";
 import IssueList from "@/components/IssueList";
 import { getRepoIssues } from "@/lib/github-api";
 import { GitHubIssue } from "@/lib/types/types";
+import { useOwnerAndRepo } from "@/lib/hooks/useOwnerAndRepo";
+import { useSession } from "next-auth/react";
 
 export default function LoadMore() {
-  const params = useParams<{ owner: string }>();
-  const searchParams = useSearchParams();
-  const currentRepo = searchParams.get("repo") as string;
+  const { owner, currentRepo } = useOwnerAndRepo();
   const [issues, setIssues] = useState<GitHubIssue[]>([]); // keeping track of the issues
   const [pagesLoaded, setPagesLoaded] = useState(1); // keeping track of the pages loaded
   const [loading, setLoading] = useState(true);
+  const { data: session } = useSession();
 
   const { ref, inView } = useInView();
 
@@ -22,8 +22,9 @@ export default function LoadMore() {
     const nextPage = pagesLoaded + 1;
     const { issues: newIssues } =
       (await getRepoIssues(
-        { owner: params.owner, repo: currentRepo },
-        nextPage
+        { owner, repo: currentRepo },
+        nextPage,
+        session?.user.accessToken ?? ""
       )) ?? [];
     if (newIssues.length < 10) {
       setLoading(false);

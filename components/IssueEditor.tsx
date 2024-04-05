@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
@@ -15,6 +15,7 @@ import "./styles/Viewer.css";
 import { Separator } from "./ui/separator";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
+import { useOwnerAndRepo } from "@/lib/hooks/useOwnerAndRepo";
 
 type EditorProps = {
   initialTitle: string | undefined;
@@ -31,8 +32,7 @@ export default function Editor({
 
   const { data: session } = useSession();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const currentRepo = searchParams.get("repo") as string;
+  const { currentRepo } = useOwnerAndRepo();
   const [title, setTitle] = useState<string | undefined>(initialTitle);
 
   // For initialization; on mount, convert the initial Markdown to blocks and replace the default editor's content

@@ -1,12 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  useRouter,
-  useSearchParams,
-  useParams,
-  usePathname,
-} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import {
   DropdownMenu,
@@ -17,19 +12,17 @@ import {
 import { closeIssue } from "@/lib/github-api";
 import toast from "react-hot-toast";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { Button } from "./ui/button";
+import { useOwnerAndRepo } from "@/lib/hooks/useOwnerAndRepo";
 
 export default function IssueActionButton({ number }: { number: number }) {
   const router = useRouter();
-  const pathname = usePathname();
-  const params = useParams<{ owner: string }>();
-  const searchParams = useSearchParams();
-  const currentRepo = searchParams.get("repo") as string;
+  const { owner, currentRepo, issueNumber } = useOwnerAndRepo();
   const { data: session } = useSession();
+
   const handleDeleteIssue = async () => {
     const { success } = await closeIssue(
       {
-        owner: params.owner,
+        owner,
         repo: currentRepo,
         number,
       },
@@ -38,8 +31,7 @@ export default function IssueActionButton({ number }: { number: number }) {
 
     if (success) {
       toast.success("Issue deleted");
-      if (pathname.includes(`${number}`))
-        router.push(`/${params.owner}/issue?repo=${currentRepo}`);
+      if (issueNumber) router.push(`/${owner}/issue?repo=${currentRepo}`);
 
       router.refresh();
     } else {
@@ -56,9 +48,7 @@ export default function IssueActionButton({ number }: { number: number }) {
         <DropdownMenuItem
           onClick={(e) => {
             e.stopPropagation();
-            router.push(
-              `/${params.owner}/issue/${number}/edit?repo=${currentRepo}`
-            );
+            router.push(`/${owner}/issue/${number}/edit?repo=${currentRepo}`);
           }}
         >
           Edit issue

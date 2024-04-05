@@ -1,9 +1,7 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import React from "react";
-import { useRouter, useSearchParams, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { GitHubIssue } from "@/lib/types/types";
 import {
@@ -14,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import IssueActionButton from "./IssueActionButton";
+import { useOwnerAndRepo } from "@/lib/hooks/useOwnerAndRepo";
 
 export default function IssueList({
   issues,
@@ -21,9 +20,7 @@ export default function IssueList({
   issues: GitHubIssue[] | undefined;
 }) {
   const router = useRouter();
-  const params = useParams<{ owner: string }>();
-  const searchParams = useSearchParams();
-  const currentRepo = searchParams.get("repo") as string;
+  const { owner, currentRepo } = useOwnerAndRepo();
   const { data: session } = useSession();
 
   const dateTransform = (date: string) => {
@@ -49,7 +46,7 @@ export default function IssueList({
               <span className=" font-semibold">{`#${issue.number}  ·  `}</span>
               {dateTransform(issue.created_at as string).toString()}
             </CardDescription>
-            {session?.user?.name === params.owner && (
+            {session?.user?.name === owner && (
               <IssueActionButton number={issue.number as number} />
             )}
           </CardHeader>

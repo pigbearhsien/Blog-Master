@@ -1,6 +1,3 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 import React from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";

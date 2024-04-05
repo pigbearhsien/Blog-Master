@@ -70,9 +70,21 @@ export async function getUser({ owner }: GitHubIssue) {
 // Lists issues in a specified repository.
 export async function getRepoIssues(
   { owner, repo }: GitHubIssue,
-  page: number = 1
+  page: number = 1,
+  token?: string
 ) {
-  const session = await getServerSession(authOptions);
+  // 如果是在 client component 中呼叫這個函數，則會傳入 token 參數
+  // 如果是用戶未登入，則 token 會是 “” 空字串
+  let session;
+
+  if (token !== undefined) {
+    // client component
+    session = token.length !== 0 ? { user: { accessToken: token } } : undefined;
+  } else {
+    // server component
+    session = await getServerSession(authOptions);
+  }
+
   const headers = session
     ? { Authorization: `Bearer ${session.user.accessToken}` }
     : {};
