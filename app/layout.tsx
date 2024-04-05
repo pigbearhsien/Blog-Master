@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import Provider from "@/lib/context/client-provider";
+import ogImage from "./opengraph-image.jpg";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +15,15 @@ export const metadata: Metadata = {
     template: "%s - Blog Master",
   },
   description: "A Blog Platform Powered by GitHub Issues.",
+  openGraph: {
+    images: [
+      {
+        url: ogImage.src,
+        width: ogImage.width,
+        height: ogImage.height,
+      },
+    ],
+  },
 };
 
 export default async function RootLayout({
