@@ -1,21 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { GitHubIssue, GitHubRepo, GitHubUser } from "@/lib/types/types";
+import { GitHubIssue, GitHubRepo } from "@/lib/types/types";
 import { getErrorMessage } from "@/lib/utils";
-
-// Helper function to retrieve the GitHub access token from the session.
-async function getSessionToken() {
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.accessToken) {
-      throw new Error("Session token not found.");
-    }
-    return session.user.accessToken;
-  } catch (error) {
-    console.error("Error retrieving session token:", error);
-    throw error;
-  }
-}
 
 // Helper function to make a fetch call to the GitHub API with necessary headers.
 async function fetchGitHubAPI(
@@ -23,7 +9,7 @@ async function fetchGitHubAPI(
   options: {
     method?: string;
     body?: string;
-    headers?: Record<string, string>;
+    headers?: Record<string, string> | {};
   } = {} // 如果在呼叫函數時沒有提供 options 參數，那麼 options 將會是一個空物件。
 ) {
   try {
@@ -50,7 +36,10 @@ async function fetchGitHubAPI(
 
 // Fetches public repositories for the specified user.
 export async function getUser({ owner }: GitHubIssue) {
-  const token = await getSessionToken();
+  const session = await getServerSession(authOptions);
+  const headers = session
+    ? { Authorization: `Bearer ${session.user.accessToken}` }
+    : {};
   try {
     let page = 1;
     let repos: GitHubRepo[] = [];
@@ -59,9 +48,7 @@ export async function getUser({ owner }: GitHubIssue) {
         `/users/${owner}/repos?per_page=100&page=${page}`,
         {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers,
         }
       );
       repos = repos.concat(newRepos);
@@ -82,16 +69,17 @@ export async function getRepoIssues(
   { owner, repo }: GitHubIssue,
   page: number = 1
 ) {
-  const token = await getSessionToken();
+  const session = await getServerSession(authOptions);
+  const headers = session
+    ? { Authorization: `Bearer ${session.user.accessToken}` }
+    : {};
   const perPage = 10;
   try {
     const issues = await fetchGitHubAPI(
       `/repos/${owner}/${repo}/issues?page=${page}&per_page=${perPage}`,
       {
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers,
       }
     );
     return { issues };
@@ -102,15 +90,16 @@ export async function getRepoIssues(
 
 // Retrieves a specific issue from a repository.
 export async function getIssue({ owner, repo, number }: GitHubIssue) {
-  const token = await getSessionToken();
+  const session = await getServerSession(authOptions);
+  const headers = session
+    ? { Authorization: `Bearer ${session.user.accessToken}` }
+    : {};
   try {
     const issue = await fetchGitHubAPI(
       `/repos/${owner}/${repo}/issues/${number}`,
       {
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers,
       }
     );
     return { issue };
@@ -121,15 +110,16 @@ export async function getIssue({ owner, repo, number }: GitHubIssue) {
 
 // Fetches comments for a specific issue in a repository.
 export async function getIssueComments({ owner, repo, number }: GitHubIssue) {
-  const token = await getSessionToken();
+  const session = await getServerSession(authOptions);
+  const headers = session
+    ? { Authorization: `Bearer ${session.user.accessToken}` }
+    : {};
   try {
     const comments = await fetchGitHubAPI(
       `/repos/${owner}/${repo}/issues/${number}/comments`,
       {
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers,
       }
     );
     return { comments };

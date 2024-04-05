@@ -18,7 +18,7 @@ export default function ErrorBoundary({
   }, [error]);
   return (
     <>
-      <h2 className="text-2xl mb-4 font-semibold w-fit mx-auto  mt-[20vh]">
+      <h2 className="text-2xl mb-4 font-semibold w-fit mx-auto  mt-[20vh] px-10">
         {error.message}
       </h2>
       <div className="flex items-center gap-3 w-fit mx-auto">
