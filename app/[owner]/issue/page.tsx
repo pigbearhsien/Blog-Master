@@ -31,7 +31,7 @@ export default async function MainPage({
   });
 
   if (!repos || getUserError) {
-    throw new Error("User not found.");
+    throw new Error(getUserError);
   }
 
   const reposCanHaveIssues = repos

@@ -57,7 +57,10 @@ export async function getUser({ owner }: GitHubIssue) {
       }
       page++;
     }
-    const userInfo = await fetchGitHubAPI(`/users/${owner}`);
+    const userInfo = await fetchGitHubAPI(`/users/${owner}`, {
+      method: "GET",
+      headers,
+    });
     return { repos, userInfo };
   } catch (error) {
     return { getUserError: getErrorMessage(error) };

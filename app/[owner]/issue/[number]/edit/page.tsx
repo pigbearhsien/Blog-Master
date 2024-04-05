@@ -30,7 +30,7 @@ export default async function IssuePage({
   });
 
   if (getIssueError) {
-    throw new Error("Issue not found.");
+    throw new Error(getIssueError);
   }
 
   if (issue && issue.state !== "open") {
