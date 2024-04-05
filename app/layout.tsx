@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import Provider from "@/lib/context/client-provider";
-import ogImage from "./opengraph-image.jpg";
+import ogImage from "./opengraph-image.png";
 
 const inter = Inter({ subsets: ["latin"] });
 
