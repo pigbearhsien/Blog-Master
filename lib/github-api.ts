@@ -2,7 +2,6 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { GitHubIssue, GitHubRepo, GitHubUser } from "@/lib/types/types";
 import { getErrorMessage } from "@/lib/utils";
-import { getToken } from "next-auth/jwt";
 
 // Helper function to retrieve the GitHub access token from the session.
 async function getSessionToken() {
@@ -27,12 +26,10 @@ async function fetchGitHubAPI(
     headers?: Record<string, string>;
   } = {} // 如果在呼叫函數時沒有提供 options 參數，那麼 options 將會是一個空物件。
 ) {
-  // const token = await getSessionToken();
   try {
     const headers = {
       Accept: "application/vnd.github+json",
       ...options.headers,
-      // Authorization: `Bearer ${token}`,
     };
 
     const response = await fetch(`https://api.github.com${endpoint}`, {
@@ -53,12 +50,19 @@ async function fetchGitHubAPI(
 
 // Fetches public repositories for the specified user.
 export async function getUser({ owner }: GitHubIssue) {
+  const token = await getSessionToken();
   try {
     let page = 1;
     let repos: GitHubRepo[] = [];
     while (true) {
       const newRepos = await fetchGitHubAPI(
-        `/users/${owner}/repos?per_page=100&page=${page}`
+        `/users/${owner}/repos?per_page=100&page=${page}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       repos = repos.concat(newRepos);
       if (newRepos.length < 100) {
@@ -78,10 +82,17 @@ export async function getRepoIssues(
   { owner, repo }: GitHubIssue,
   page: number = 1
 ) {
+  const token = await getSessionToken();
   const perPage = 10;
   try {
     const issues = await fetchGitHubAPI(
-      `/repos/${owner}/${repo}/issues?page=${page}&per_page=${perPage}`
+      `/repos/${owner}/${repo}/issues?page=${page}&per_page=${perPage}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return { issues };
   } catch (error) {
@@ -91,9 +102,16 @@ export async function getRepoIssues(
 
 // Retrieves a specific issue from a repository.
 export async function getIssue({ owner, repo, number }: GitHubIssue) {
+  const token = await getSessionToken();
   try {
     const issue = await fetchGitHubAPI(
-      `/repos/${owner}/${repo}/issues/${number}`
+      `/repos/${owner}/${repo}/issues/${number}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return { issue };
   } catch (error) {
@@ -103,9 +121,16 @@ export async function getIssue({ owner, repo, number }: GitHubIssue) {
 
 // Fetches comments for a specific issue in a repository.
 export async function getIssueComments({ owner, repo, number }: GitHubIssue) {
+  const token = await getSessionToken();
   try {
     const comments = await fetchGitHubAPI(
-      `/repos/${owner}/${repo}/issues/${number}/comments`
+      `/repos/${owner}/${repo}/issues/${number}/comments`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return { comments };
   } catch (error) {
@@ -118,7 +143,6 @@ export async function createIssue(
   { owner, repo, title, body }: GitHubIssue,
   token: string
 ) {
-  // const token = await getSessionToken();
   try {
     const newIssue = await fetchGitHubAPI(`/repos/${owner}/${repo}/issues`, {
       method: "POST",
@@ -139,7 +163,6 @@ export async function updateIssue(
   { owner, repo, number, title, body }: GitHubIssue,
   token: string
 ) {
-  // const token = await getSessionToken();
   try {
     const updateIssue = await fetchGitHubAPI(
       `/repos/${owner}/${repo}/issues/${number}`,
@@ -163,8 +186,6 @@ export async function closeIssue(
   { owner, repo, number }: GitHubIssue,
   token: string
 ) {
-  // const token = await getSessionToken();
-  // const token = await getToken({ req: authOptions });
   try {
     await fetchGitHubAPI(`/repos/${owner}/${repo}/issues/${number}`, {
       method: "PATCH",
