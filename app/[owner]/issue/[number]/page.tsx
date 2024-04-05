@@ -9,6 +9,24 @@ import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/components/ui/separator";
 import CommentSheet from "@/components/CommentSheet";
 import dynamic from "next/dynamic";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: { owner: string; number: number };
+  searchParams: { [key: string]: string | undefined };
+}): Promise<Metadata> {
+  const { issue } = await getIssue({
+    owner: params.owner,
+    number: params.number,
+    repo: searchParams.repo,
+  });
+  return {
+    title: `${issue?.title} | ${params.owner}` ?? "Issue",
+  };
+}
 
 const Viewer = dynamic(() => import("@/components/IssueViewer"), {
   ssr: false,

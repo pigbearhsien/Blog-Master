@@ -5,6 +5,12 @@ import { getUser } from "@/lib/github-api";
 import { GitHubRepo } from "@/lib/types/types";
 import dynamic from "next/dynamic";
 
+export async function generateMetadata() {
+  return {
+    title: "New Issue",
+  };
+}
+
 const Editor = dynamic(() => import("@/components/IssueEditor"), {
   ssr: false,
 });

@@ -17,9 +17,19 @@ import {
   PlusIcon,
 } from "@radix-ui/react-icons";
 
-export const metadata: Metadata = {
-  title: "Issues",
-};
+// export const metadata: Metadata = {
+//   title: "Issues",
+// };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { owner: string };
+}) {
+  return {
+    title: params.owner,
+  };
+}
 
 export default async function MainPage({
   params,

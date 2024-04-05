@@ -3,6 +3,24 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { getIssue } from "@/lib/github-api";
 import dynamic from "next/dynamic";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: { owner: string; number: number };
+  searchParams: { [key: string]: string | undefined };
+}): Promise<Metadata> {
+  const { issue } = await getIssue({
+    owner: params.owner,
+    number: params.number,
+    repo: searchParams.repo,
+  });
+  return {
+    title: `Editing ${issue?.title}` ?? "Editing",
+  };
+}
 
 const Editor = dynamic(() => import("@/components/IssueEditor"), {
   ssr: false,
