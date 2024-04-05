@@ -1,14 +1,25 @@
 "use client";
 
-import { ChangeEvent, useCallback, useEffect } from "react";
-import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
+import { useEffect } from "react";
+import {
+  BlockNoteView,
+  useCreateBlockNote,
+  lightDefaultTheme,
+} from "@blocknote/react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
 import "./styles/Viewer.css";
 
 export default function Viewer({ body }: { body: string | undefined }) {
   // Creates a new editor instance.
-  const editor = useCreateBlockNote();
+  const editor = useCreateBlockNote({
+    domAttributes: {
+      inlineContent: {
+        // Adds a class to all `inlineContent` elements.
+        class: "inline-content-css",
+      },
+    },
+  });
 
   // For initialization; on mount, convert the initial Markdown to blocks and replace the default editor's content
   useEffect(() => {
@@ -24,8 +35,8 @@ export default function Viewer({ body }: { body: string | undefined }) {
     <BlockNoteView
       editor={editor}
       editable={false}
+      theme={lightDefaultTheme}
       data-theming-css-demo
-      data-theming-css-variables-demo
     />
   );
 }

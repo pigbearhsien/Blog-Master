@@ -1,3 +1,20 @@
 .bn-container[data-theming-css-demo] .bn-editor {
   padding-inline: 0px !important;
 }
+
+.inline-content-css {
+  font-size: 16px;
+  line-height: 2em;
+}
+
+.inline-content-css a {
+  color: rgb(99, 99, 99);
+  border-bottom: 0.8px solid rgb(170, 166, 166);
+}
+
+.inline-content-css code {
+  font-size: smaller;
+  background-color: rgba(224, 222, 222, 0.595);
+  padding: 4px;
+  border-radius: 3px;
+}
