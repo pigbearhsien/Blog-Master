@@ -21,6 +21,10 @@ export default function ErrorBoundary({
       <h2 className="text-2xl mb-4 font-semibold w-fit mx-auto  mt-[20vh] px-10">
         {error.message}
       </h2>
+      <p className="text-lg mb-8 font-medium w-fit mx-auto  px-10">
+        If you receive 403 rate limit error, please sign in to GitHub to get a
+        higher rate limit and try again.
+      </p>
       <div className="flex items-center gap-3 w-fit mx-auto">
         <Button
           onClick={

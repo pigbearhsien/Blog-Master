@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import React from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
@@ -77,17 +80,15 @@ export default async function MainPage({
               <span className="font-light text-slate-500">{params.owner} </span>
               <ChevronRightIcon className=" inline-flex mx-2" />
               <span>{selectedRepo}</span>
-              <Link
+              <a
                 href={`https://github.com/${params.owner}/${selectedRepo}`}
-                passHref
-                legacyBehavior
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <a target="_blank" rel="noopener noreferrer">
-                  <Button variant={"ghost"} size={"icon"}>
-                    <ExternalLinkIcon />
-                  </Button>
-                </a>
-              </Link>
+                <Button variant={"ghost"} size={"icon"}>
+                  <ExternalLinkIcon />
+                </Button>
+              </a>
               {session?.user?.name === params.owner && (
                 <Link
                   href={`/${params.owner}/issue/new?repo=${selectedRepo}`}

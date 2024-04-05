@@ -75,6 +75,7 @@ export default function Editor({
     router.push(
       `/${session?.user?.name}/issue/${newIssue.number}?repo=${currentRepo}`
     );
+    router.refresh();
   };
 
   const handleUpdateIssue = async () => {
@@ -105,6 +106,7 @@ export default function Editor({
 
     toast.success("Issue updated");
     router.push(`/${session?.user?.name}/issue/${number}?repo=${currentRepo}`);
+    router.refresh();
   };
 
   return (

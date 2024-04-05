@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
 import SignButton from "@/components/SighButton";
 import { Button } from "@/components/ui/button";
@@ -33,17 +32,15 @@ export default async function WelcomePage() {
           height={30}
           className=" mr-2"
         />
-        <Link
+        <a
           href="https://github.com/pigbearhsien/blog-master"
-          passHref
-          legacyBehavior
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <a target="_blank" rel="noopener noreferrer">
-            <Button variant={"outline"} size={"icon"}>
-              <GitHubLogoIcon className="h-4 w-4" />
-            </Button>
-          </a>
-        </Link>
+          <Button variant={"outline"} size={"icon"}>
+            <GitHubLogoIcon className="h-4 w-4" />
+          </Button>
+        </a>
       </div>
       <Image
         src="/Cover.png"

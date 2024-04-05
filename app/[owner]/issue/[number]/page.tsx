@@ -4,15 +4,8 @@ import { authOptions } from "@/lib/auth";
 import Image from "next/image";
 import { getIssue, getIssueComments } from "@/lib/github-api";
 import IssueActionButton from "@/components/IssueActionButton";
-import { GitHubIssueComment } from "@/lib/types/types";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  ChatBubbleIcon,
-  ChevronRightIcon,
-  ExternalLinkIcon,
-  PlusIcon,
-} from "@radix-ui/react-icons";
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/components/ui/separator";
 import CommentSheet from "@/components/CommentSheet";
 import dynamic from "next/dynamic";
@@ -78,48 +71,43 @@ export default async function IssuePage({
         />
         <div className="flex flex-col  mr-auto">
           <div className="flex items-center">
-            <Link href={`/${params.owner}/issue`} className="w-fit">
+            <a href={`/${params.owner}/issue`} className="w-fit">
               <span className="  font-light hover:border-b hover:border-black">
                 {params.owner}
               </span>
-            </Link>
-            <Link
+            </a>
+            <a
               href={`https://github.com/${params.owner}`}
-              passHref
-              legacyBehavior
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <a target="_blank" rel="noopener noreferrer">
-                <Button variant={"ghost"} size={"icon"}>
-                  <ExternalLinkIcon />
-                </Button>
-              </a>
-            </Link>
+              <Button variant={"ghost"} size={"icon"}>
+                <ExternalLinkIcon />
+              </Button>
+            </a>
           </div>
 
           <p className="font-light text-slate-500 text-sm">
             Created in{" "}
-            <Link href={`/${params.owner}/issue?repo=${selectedRepo}`}>
+            <a href={`/${params.owner}/issue?repo=${selectedRepo}`}>
               <span className="  font-light hover:border-b hover:border-black text-black  ">
                 {selectedRepo}
               </span>
-            </Link>{" "}
+            </a>{" "}
             · {dateTransform(issue.created_at)}
           </p>
         </div>
         <div className="flex items-center  text-slate-800 font-light">
           <CommentSheet comments={comments} />
-          <Link
+          <a
             href={`https://github.com/${params.owner}/${selectedRepo}/issues/${params.number}`}
-            passHref
-            legacyBehavior
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <a target="_blank" rel="noopener noreferrer">
-              <Button variant={"ghost"} size={"icon"}>
-                <ExternalLinkIcon />
-              </Button>
-            </a>
-          </Link>
-
+            <Button variant={"ghost"} size={"icon"}>
+              <ExternalLinkIcon />
+            </Button>
+          </a>
           {session?.user?.name === params.owner && (
             <IssueActionButton number={params.number} />
           )}
