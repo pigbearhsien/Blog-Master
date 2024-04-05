@@ -5,7 +5,6 @@ import Image from "next/image";
 import { getIssue, getIssueComments } from "@/lib/github-api";
 import IssueActionButton from "@/components/IssueActionButton";
 import { GitHubIssueComment } from "@/lib/types/types";
-// import Viewer from "@/components/IssueViewer";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -68,7 +67,7 @@ export default async function IssuePage({
 
   return (
     <article className="container flex-1 items-start px-72 py-12">
-      <p className=" font-bold text-5xl">{issue?.title}</p>
+      <p className=" font-bold text-5xl break-words p-2">{issue?.title}</p>
       <section className="flex items-center  py-9">
         <Image
           src={issue.user.avatar_url}

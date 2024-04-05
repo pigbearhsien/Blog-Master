@@ -54,7 +54,7 @@ export default function IssueList({
             )}
           </CardHeader>
           <CardContent>
-            <p className=" text-lg font-bold  overflow-hidden  line-clamp-2 text-ellipsis">
+            <p className=" text-lg font-bold  overflow-hidden  line-clamp-2 text-ellipsis break-words">
               {issue.title}
             </p>
           </CardContent>
