@@ -34,6 +34,7 @@ export default function CommentSheet({
     <Sheet>
       <SheetTrigger asChild>
         <Button
+          aria-label="View Comments"
           variant={"ghost"}
           className="text-base font-extralight gap-1 items-center"
           size={"icon"}

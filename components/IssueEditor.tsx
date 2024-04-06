@@ -123,10 +123,15 @@ export default function Editor({
         className=" "
       >
         <div className="w-fit ml-auto">
-          <Button type="submit" className="bg-[#1A8917] hover:bg-[#1A8917]/90">
+          <Button
+            aria-label="Save"
+            type="submit"
+            className="bg-[#1A8917] hover:bg-[#1A8917]/90"
+          >
             Save
           </Button>
           <Button
+            aria-label="Cancel"
             type="button"
             className="ml-4"
             variant={"outline"}

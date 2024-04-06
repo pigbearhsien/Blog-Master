@@ -26,6 +26,7 @@ export default function RepoList({ repos, selectedRepo }: RepoListProps) {
             className="mt-2"
           >
             <Button
+              aria-label={`Select ${repo.name} repository`}
               variant={"ghost"}
               className={`w-full justify-start overflow-hidden font-light ${
                 repo.name === selectedRepo

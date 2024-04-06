@@ -37,7 +37,11 @@ export default async function WelcomePage() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Button variant={"outline"} size={"icon"}>
+          <Button
+            variant={"outline"}
+            size={"icon"}
+            aria-label="Blog Master GitHub Link"
+          >
             <GitHubLogoIcon className="h-4 w-4" />
           </Button>
         </a>

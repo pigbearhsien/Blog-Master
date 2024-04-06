@@ -41,11 +41,15 @@ export default function IssueActionButton({ number }: { number: number }) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="w-7 h-7 !outline-none !mt-0 hover:bg-accent hover:text-accent-foreground">
+      <DropdownMenuTrigger
+        aria-label="Issue Actions"
+        className="w-7 h-7 !outline-none !mt-0 hover:bg-accent hover:text-accent-foreground"
+      >
         <DotsHorizontalIcon className="w-7" />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem
+          aria-label="Edit Issue"
           onClick={(e) => {
             e.stopPropagation();
             router.push(`/${owner}/issue/${number}/edit?repo=${currentRepo}`);
@@ -54,6 +58,7 @@ export default function IssueActionButton({ number }: { number: number }) {
           Edit issue
         </DropdownMenuItem>
         <DropdownMenuItem
+          aria-label="Delete Issue"
           className="text-red-500"
           onClick={(e) => {
             e.stopPropagation();

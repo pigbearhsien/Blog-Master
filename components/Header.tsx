@@ -24,7 +24,11 @@ export default async function Header() {
         rel="noopener noreferrer"
         className="mr-4"
       >
-        <Button variant={"outline"} size={"icon"}>
+        <Button
+          aria-label="Blog Master GitHub Link"
+          variant={"outline"}
+          size={"icon"}
+        >
           <GitHubLogoIcon className="h-4 w-4" />
         </Button>
       </a>
@@ -32,7 +36,7 @@ export default async function Header() {
       <section className="ml-auto flex items-center gap-1">
         {session && (
           <Link href="/">
-            <Button variant={"ghost"}>
+            <Button aria-label="Your Issues" variant={"ghost"}>
               <CardStackIcon className="mr-2 h-5 w-5" />
               Your Issues
             </Button>

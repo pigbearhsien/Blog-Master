@@ -27,6 +27,7 @@ export default function ErrorBoundary({
       </p>
       <div className="flex items-center gap-3 w-fit mx-auto">
         <Button
+          aria-label="Try Again"
           onClick={
             // Attempt to recover by trying to re-render the segment
             () => reset()
@@ -34,7 +35,11 @@ export default function ErrorBoundary({
         >
           Try again
         </Button>
-        <Button variant={"outline"} onClick={() => router.back()}>
+        <Button
+          aria-label="Back to Previous Page"
+          variant={"outline"}
+          onClick={() => router.back()}
+        >
           Back
         </Button>
       </div>

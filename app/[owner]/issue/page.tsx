@@ -94,7 +94,11 @@ export default async function MainPage({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button variant={"ghost"} size={"icon"}>
+                <Button
+                  aria-label="View the Current Repo on GitHub"
+                  variant={"ghost"}
+                  size={"icon"}
+                >
                   <ExternalLinkIcon />
                 </Button>
               </a>
@@ -103,7 +107,10 @@ export default async function MainPage({
                   href={`/${params.owner}/issue/new?repo=${selectedRepo}`}
                   className="ml-auto"
                 >
-                  <Button className=" bg-[#1A8917] hover:bg-[#1A8917]/90">
+                  <Button
+                    aria-label="Create New Issue"
+                    className=" bg-[#1A8917] hover:bg-[#1A8917]/90"
+                  >
                     <PlusIcon className="mr-2" />
                     New Issue
                   </Button>

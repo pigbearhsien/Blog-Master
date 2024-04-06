@@ -7,11 +7,16 @@ const SignButton = () => {
   const { data: session } = useSession();
 
   return session ? (
-    <Button variant={"outline"} onClick={() => signOut({ callbackUrl: "/" })}>
+    <Button
+      aria-label="Sign out of GitHub"
+      variant={"outline"}
+      onClick={() => signOut({ callbackUrl: "/" })}
+    >
       Sign out of GitHub
     </Button>
   ) : (
     <Button
+      aria-label="Sign in to GitHub"
       variant={"default"}
       onClick={() => signIn("github", { callbackUrl: "/" })}
     >

@@ -100,7 +100,11 @@ export default async function IssuePage({
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button variant={"ghost"} size={"icon"}>
+              <Button
+                aria-label="View the Owner on GitHub"
+                variant={"ghost"}
+                size={"icon"}
+              >
                 <ExternalLinkIcon />
               </Button>
             </a>
@@ -123,7 +127,11 @@ export default async function IssuePage({
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button variant={"ghost"} size={"icon"}>
+            <Button
+              aria-label="View the Issue on GitHub"
+              variant={"ghost"}
+              size={"icon"}
+            >
               <ExternalLinkIcon />
             </Button>
           </a>
