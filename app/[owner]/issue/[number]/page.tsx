@@ -24,7 +24,8 @@ export async function generateMetadata({
     repo: searchParams.repo,
   });
   return {
-    title: `${issue?.title} | ${params.owner}` ?? "Issue",
+    title: `${issue?.title} | by ${params.owner}` ?? "Issue",
+    description: issue?.body ?? "",
   };
 }
 

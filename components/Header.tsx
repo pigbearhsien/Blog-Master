@@ -34,7 +34,7 @@ export default async function Header() {
           <Link href="/">
             <Button variant={"ghost"}>
               <CardStackIcon className="mr-2 h-5 w-5" />
-              My Issues
+              Your Issues
             </Button>
           </Link>
         )}

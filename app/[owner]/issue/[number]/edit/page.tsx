@@ -19,6 +19,7 @@ export async function generateMetadata({
   });
   return {
     title: `Editing ${issue?.title}` ?? "Editing",
+    description: issue?.body ?? "",
   };
 }
 

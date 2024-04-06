@@ -17,17 +17,14 @@ import {
   PlusIcon,
 } from "@radix-ui/react-icons";
 
-// export const metadata: Metadata = {
-//   title: "Issues",
-// };
-
 export async function generateMetadata({
   params,
 }: {
   params: { owner: string };
-}) {
+}): Promise<Metadata> {
+  const session = await getServerSession(authOptions);
   return {
-    title: params.owner,
+    title: session?.user?.name === params.owner ? "Your Issues" : params.owner,
   };
 }
 
