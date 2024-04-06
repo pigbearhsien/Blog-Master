@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s - Blog Master",
   },
   description: "A Blog Platform Powered by GitHub Issues.",
-  metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/`),
+  metadataBase: new URL("https://blog-master-alpha.vercel.app/"),
 };
 
 export default async function RootLayout({
