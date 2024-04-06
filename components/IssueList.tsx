@@ -4,15 +4,15 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { GitHubIssue } from "@/lib/types/types";
+import { dateTransform } from "@/lib/utils";
+import { useOwnerAndRepo } from "@/lib/hooks/useOwnerAndRepo";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
-import IssueActionButton from "./IssueActionButton";
-import { useOwnerAndRepo } from "@/lib/hooks/useOwnerAndRepo";
+import IssueActionButton from "@/components/IssueActionButton";
 
 export default function IssueList({
   issues,
@@ -23,14 +23,6 @@ export default function IssueList({
   const { owner, currentRepo } = useOwnerAndRepo();
   const { data: session } = useSession();
 
-  const dateTransform = (date: string) => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
   return (
     <>
       {issues?.map((issue: GitHubIssue) => (

@@ -1,35 +1,26 @@
 "use client";
 
+import Image from "next/image";
+import { GitHubIssueComment } from "@/lib/types/types";
+import { dateTransform } from "@/lib/utils";
+import { ChatBubbleIcon, Cross1Icon } from "@radix-ui/react-icons";
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { ChatBubbleIcon, Cross1Icon } from "@radix-ui/react-icons";
-import { GitHubIssueComment } from "@/lib/types/types";
-import { Separator } from "./ui/separator";
-import Viewer from "./IssueViewer";
-import Image from "next/image";
+import { Separator } from "@/components/ui/separator";
+import Viewer from "@/components/IssueViewer";
 
 export default function CommentSheet({
   comments,
 }: {
   comments: GitHubIssueComment[];
 }) {
-  const dateTransform = (date: string) => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
   return (
     <Sheet>
       <SheetTrigger asChild>

@@ -1,15 +1,16 @@
 import React from "react";
+import { Metadata } from "next";
+import Image from "next/image";
+import dynamic from "next/dynamic";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import Image from "next/image";
+import { dateTransform } from "@/lib/utils";
 import { getIssue, getIssueComments } from "@/lib/github-api";
-import IssueActionButton from "@/components/IssueActionButton";
-import { Button } from "@/components/ui/button";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import IssueActionButton from "@/components/IssueActionButton";
 import CommentSheet from "@/components/CommentSheet";
-import dynamic from "next/dynamic";
-import { Metadata } from "next";
 
 export async function generateMetadata({
   params,
@@ -41,9 +42,7 @@ export default async function IssuePage({
   searchParams: { [key: string]: string | undefined };
 }) {
   const session = await getServerSession(authOptions);
-
   const selectedRepo = searchParams.repo;
-
   const { issue, getIssueError } = await getIssue({
     owner: params.owner,
     number: params.number,
@@ -68,18 +67,10 @@ export default async function IssuePage({
     throw new Error(getCommentsError);
   }
 
-  const dateTransform = (date: string) => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
   return (
     <article className="container flex-1 items-start px-72 py-12">
       <p className=" font-bold text-5xl break-words p-2">{issue?.title}</p>
+
       <section className="flex items-center  py-9">
         <Image
           src={issue.user.avatar_url}
@@ -88,6 +79,7 @@ export default async function IssuePage({
           height={40}
           className=" rounded-full mr-4"
         />
+
         <div className="flex flex-col  mr-auto">
           <div className="flex items-center">
             <a
@@ -128,6 +120,7 @@ export default async function IssuePage({
             · {dateTransform(issue.created_at)}
           </p>
         </div>
+
         <div className="flex items-center  text-slate-800 font-light">
           <CommentSheet comments={comments} />
           <a
@@ -149,6 +142,7 @@ export default async function IssuePage({
           )}
         </div>
       </section>
+
       <Separator className="mb-6" />
 
       <Viewer body={issue?.body} />

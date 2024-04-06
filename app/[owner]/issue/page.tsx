@@ -1,21 +1,21 @@
 import React from "react";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { getUser, getRepoIssues } from "@/lib/github-api";
-import { GitHubIssue, GitHubRepo, GitHubUser } from "@/lib/types/types";
-import RepoList from "@/components/RepoList";
-import OwnerSection from "@/components/OwnerSection";
-import IssueList from "@/components/IssueList";
-import { redirect } from "next/navigation";
-import LoadMore from "@/components/LoadMore";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { GitHubRepo } from "@/lib/types/types";
 import {
   ChevronRightIcon,
   ExternalLinkIcon,
   PlusIcon,
 } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
+import RepoList from "@/components/RepoList";
+import OwnerSection from "@/components/OwnerSection";
+import IssueList from "@/components/IssueList";
+import LoadMore from "@/components/LoadMore";
 
 export async function generateMetadata({
   params,
@@ -82,10 +82,10 @@ export default async function MainPage({
           <RepoList repos={reposCanHaveIssues} selectedRepo={selectedRepo} />
         </div>
       </aside>
-      <section className="col-span-2 relative py-8 px-2 ">
+      <main className="col-span-2 relative py-8 px-2 ">
         {selectedRepo && (
           <>
-            <div className="flex items-center mb-4 h-8">
+            <section className="flex items-center mb-4 h-8">
               <span className="font-light text-slate-500">{params.owner} </span>
               <ChevronRightIcon className=" inline-flex mx-2" />
               <span>{selectedRepo}</span>
@@ -111,14 +111,14 @@ export default async function MainPage({
                 >
                   <Button
                     aria-label="Create New Issue"
-                    className=" bg-[#12670E]/85 hover:bg-[#12670E]"
+                    className=" bg-[#1A8917] hover:bg-[#1A8917]/90"
                   >
                     <PlusIcon className="mr-2" />
                     New Issue
                   </Button>
                 </Link>
               )}
-            </div>
+            </section>
             {issues?.length === 0 ? (
               <p className=" text-lg font-semibold ">No issues found.</p>
             ) : (
@@ -129,7 +129,7 @@ export default async function MainPage({
             )}
           </>
         )}
-      </section>
+      </main>
     </div>
   );
 }

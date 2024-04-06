@@ -1,11 +1,11 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
 import Link from "next/link";
 import Image from "next/image";
-import SignButton from "./SighButton";
-import SearchBar from "./SearchBar";
-import { Button } from "@/components/ui/button";
+import { authOptions } from "@/lib/auth";
 import { CardStackIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
+import SignButton from "@/components/SighButton";
+import SearchBar from "@/components/SearchBar";
 
 export default async function Header() {
   const session = await getServerSession(authOptions);

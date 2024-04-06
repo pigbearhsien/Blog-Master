@@ -1,11 +1,11 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import SignButton from "@/components/SighButton";
-import { Button } from "@/components/ui/button";
+import { authOptions } from "@/lib/auth";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
 import SearchBar from "@/components/SearchBar";
+import SignButton from "@/components/SighButton";
 
 export default async function WelcomePage() {
   const session = await getServerSession(authOptions);
@@ -16,8 +16,8 @@ export default async function WelcomePage() {
   }
 
   return (
-    <section className="flex flex-col items-center relative gap-12">
-      <div className="absolute p-4 left-0 flex items-center ">
+    <div className="flex flex-col items-center relative gap-12">
+      <header className="absolute p-4 left-0 flex items-center ">
         <Image
           src="/logo.png"
           alt="Logo"
@@ -46,7 +46,7 @@ export default async function WelcomePage() {
             <GitHubLogoIcon className="h-4 w-4" />
           </Button>
         </a>
-      </div>
+      </header>
       <Image
         src="/Cover.png"
         alt="background gradient image"
@@ -57,7 +57,6 @@ export default async function WelcomePage() {
       <h1 className="text-5xl font-bold mt-52">
         A Blog Platform Powered by GitHub Issues.
       </h1>
-
       <p className="text-slate-500 font-light text-xl ">
         View, create, edit, and close GitHub issues.
       </p>
@@ -65,6 +64,6 @@ export default async function WelcomePage() {
         <SignButton />
         <SearchBar />
       </div>
-    </section>
+    </div>
   );
 }

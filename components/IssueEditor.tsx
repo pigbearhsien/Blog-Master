@@ -1,20 +1,19 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { createIssue, updateIssue } from "@/lib/github-api";
+import { useOwnerAndRepo } from "@/lib/hooks/useOwnerAndRepo";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
-import "./styles/Viewer.css";
-import { Button } from "@/components/ui/button";
-import toast from "react-hot-toast";
-import { createIssue, updateIssue } from "@/lib/github-api";
-import "./styles/Viewer.css";
-import { Separator } from "./ui/separator";
-import { Textarea } from "./ui/textarea";
-import { Label } from "./ui/label";
-import { useOwnerAndRepo } from "@/lib/hooks/useOwnerAndRepo";
+import "@/components/styles/BlockNote.css";
 
 type EditorProps = {
   initialTitle: string | undefined;
@@ -126,7 +125,6 @@ export default function Editor({
             handleCreateIssue();
           }
         }}
-        className=" "
       >
         <div className="w-fit ml-auto">
           <Button

@@ -1,9 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { GitHubRepo } from "@/lib/types/types";
-import { Separator } from "./ui/separator";
 import { CardStackIcon } from "@radix-ui/react-icons";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 type RepoListProps = {
   repos: GitHubRepo[];

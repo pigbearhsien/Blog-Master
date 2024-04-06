@@ -1,9 +1,9 @@
 import React from "react";
+import { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { getIssue } from "@/lib/github-api";
-import dynamic from "next/dynamic";
-import { Metadata } from "next";
 
 export async function generateMetadata({
   params,
@@ -37,7 +37,7 @@ export default async function IssuePage({
   const session = await getServerSession(authOptions);
   const selectedRepo = searchParams.repo;
 
-  // 只能在登入後編輯自己的 issue
+  // 登入後才能編輯自己的 issue
   if (params.owner !== session?.user?.name) {
     throw new Error("You are not authorized.");
   }

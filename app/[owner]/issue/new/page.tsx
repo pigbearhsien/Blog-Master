@@ -1,9 +1,9 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { getUser } from "@/lib/github-api";
 import { GitHubRepo } from "@/lib/types/types";
-import dynamic from "next/dynamic";
 
 export async function generateMetadata() {
   return {

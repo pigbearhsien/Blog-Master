@@ -1,18 +1,18 @@
 "use client";
 
 import React from "react";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useOwnerAndRepo } from "@/lib/hooks/useOwnerAndRepo";
+import { closeIssue } from "@/lib/github-api";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { closeIssue } from "@/lib/github-api";
-import toast from "react-hot-toast";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { useOwnerAndRepo } from "@/lib/hooks/useOwnerAndRepo";
 
 export default function IssueActionButton({ number }: { number: number }) {
   const router = useRouter();

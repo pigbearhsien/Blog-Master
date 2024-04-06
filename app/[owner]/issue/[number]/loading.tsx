@@ -15,25 +15,23 @@ export default function Loading() {
         </div>
       </section>
       <Separator className="mb-6" />
-      <div className=" space-y-2">
-        <Skeleton className="h-5 w-full" />
-        <Skeleton className="h-5 w-full" />
-        <Skeleton className="h-5 w-full" />
-        <Skeleton className="h-5 w-11/12" />
+      <div className=" space-y-4 mb-12">
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-6 w-11/12" />
       </div>
-      <br />
-      <div className=" space-y-2">
-        <Skeleton className="h-5 w-full" />
-        <Skeleton className="h-5 w-full" />
-        <Skeleton className="h-5 w-full" />
-        <Skeleton className="h-5 w-11/12" />
+      <div className=" space-y-4 mb-12">
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-6 w-11/12" />
       </div>
-      <br />
-      <div className=" space-y-2">
-        <Skeleton className="h-5 w-full" />
-        <Skeleton className="h-5 w-full" />
-        <Skeleton className="h-5 w-full" />
-        <Skeleton className="h-5 w-11/12" />
+      <div className=" space-y-4">
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-6 w-11/12" />
       </div>
     </div>
   );
