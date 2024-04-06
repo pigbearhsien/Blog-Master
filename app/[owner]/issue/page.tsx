@@ -111,7 +111,7 @@ export default async function MainPage({
                 >
                   <Button
                     aria-label="Create New Issue"
-                    className=" bg-[#1A8917] hover:bg-[#1A8917]/90"
+                    className=" bg-[#12670E]/85 hover:bg-[#12670E]"
                   >
                     <PlusIcon className="mr-2" />
                     New Issue

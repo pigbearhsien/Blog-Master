@@ -21,7 +21,7 @@ async function fetchGitHubAPI(
     const response = await fetch(`https://api.github.com${endpoint}`, {
       ...options, // 將 options 物件的所有屬性添加到新的物件中
       headers, // 覆蓋 options 物件中的 headers 屬性
-      cache: "no-store", // 不使用緩存
+      // cache: "no-store", // 不使用緩存
     });
 
     if (!response.ok) {
