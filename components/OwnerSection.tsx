@@ -22,6 +22,7 @@ export default async function OwnerSection({
       ) : null}
       <p className=" font-semibold text-lg">{name}</p>
       <a
+        aria-label="View the Owner on GitHub"
         href={`https://github.com/${name}`}
         target="_blank"
         rel="noopener noreferrer"

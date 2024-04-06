@@ -90,12 +90,17 @@ export default async function IssuePage({
         />
         <div className="flex flex-col  mr-auto">
           <div className="flex items-center">
-            <a href={`/${params.owner}/issue`} className="w-fit">
+            <a
+              aria-label="View the Owner's Issues"
+              href={`/${params.owner}/issue`}
+              className="w-fit"
+            >
               <span className="  font-light hover:border-b hover:border-black">
                 {params.owner}
               </span>
             </a>
             <a
+              aria-label="View the Owner on GitHub"
               href={`https://github.com/${params.owner}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -112,7 +117,10 @@ export default async function IssuePage({
 
           <p className="font-light text-slate-500 text-sm">
             Created in{" "}
-            <a href={`/${params.owner}/issue?repo=${selectedRepo}`}>
+            <a
+              aria-label="View the Current Repo's Issues"
+              href={`/${params.owner}/issue?repo=${selectedRepo}`}
+            >
               <span className="  font-light hover:border-b hover:border-black text-black  ">
                 {selectedRepo}
               </span>
@@ -123,6 +131,7 @@ export default async function IssuePage({
         <div className="flex items-center  text-slate-800 font-light">
           <CommentSheet comments={comments} />
           <a
+            aria-label="View the Issue on GitHub"
             href={`https://github.com/${params.owner}/${selectedRepo}/issues/${params.number}`}
             target="_blank"
             rel="noopener noreferrer"

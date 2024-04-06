@@ -90,6 +90,7 @@ export default async function MainPage({
               <ChevronRightIcon className=" inline-flex mx-2" />
               <span>{selectedRepo}</span>
               <a
+                aria-label="View the Current Repo on GitHub"
                 href={`https://github.com/${params.owner}/${selectedRepo}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -104,6 +105,7 @@ export default async function MainPage({
               </a>
               {session?.user?.name === params.owner && (
                 <Link
+                  aria-label="Create New Issue"
                   href={`/${params.owner}/issue/new?repo=${selectedRepo}`}
                   className="ml-auto"
                 >

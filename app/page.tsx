@@ -33,6 +33,7 @@ export default async function WelcomePage() {
           className=" mr-2"
         />
         <a
+          aria-label="Blog Master GitHub Link"
           href="https://github.com/pigbearhsien/blog-master"
           target="_blank"
           rel="noopener noreferrer"

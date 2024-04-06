@@ -21,6 +21,7 @@ export default function RepoList({ repos, selectedRepo }: RepoListProps) {
       ) : (
         repos.map((repo: GitHubRepo) => (
           <Link
+            aria-label={`Select ${repo.name} repository`}
             key={repo.name} // Add key prop
             href={`?repo=${repo.name}`}
             className="mt-2"
