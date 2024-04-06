@@ -1,11 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import {
-  BlockNoteView,
-  useCreateBlockNote,
-  lightDefaultTheme,
-} from "@blocknote/react";
+import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
 import "./styles/Viewer.css";
@@ -32,11 +28,6 @@ export default function Viewer({ body }: { body: string | undefined }) {
 
   // Renders the editor instance using a React component.
   return (
-    <BlockNoteView
-      editor={editor}
-      editable={false}
-      theme={lightDefaultTheme}
-      data-theming-css-demo
-    />
+    <BlockNoteView editor={editor} editable={false} data-theming-css-demo />
   );
 }

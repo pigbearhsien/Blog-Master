@@ -6,8 +6,7 @@ import { useRouter } from "next/navigation";
 import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
-// import "@mantine/core/styles.css";
-import { Input } from "@/components/ui/input";
+import "./styles/Viewer.css";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import { createIssue, updateIssue } from "@/lib/github-api";
@@ -28,7 +27,14 @@ export default function Editor({
   initialBody,
   number,
 }: EditorProps) {
-  const editor = useCreateBlockNote();
+  const editor = useCreateBlockNote({
+    domAttributes: {
+      inlineContent: {
+        // Adds a class to all `inlineContent` elements.
+        class: "inline-content-css",
+      },
+    },
+  });
 
   const { data: session } = useSession();
   const router = useRouter();
