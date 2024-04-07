@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth/next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
-import { getUser, getRepoIssues } from "@/lib/github-api";
+import { getUser, getUserRepos, getRepoIssues } from "@/lib/github-api";
 import { GitHubRepo } from "@/lib/types/types";
 import {
   ChevronRightIcon,
@@ -38,12 +38,20 @@ export default async function MainPage({
   const session = await getServerSession(authOptions);
   const selectedRepo = searchParams.repo;
 
-  const { repos, userInfo, getUserError } = await getUser({
+  const { userInfo, getUserError } = await getUser({
     owner: params.owner,
   });
 
-  if (!repos || getUserError) {
+  if (!userInfo || getUserError) {
     throw new Error(getUserError);
+  }
+
+  const { repos, getUserReposError } = await getUserRepos({
+    owner: params.owner,
+  });
+
+  if (!repos || getUserReposError) {
+    throw new Error(getUserReposError);
   }
 
   const reposCanHaveIssues = repos

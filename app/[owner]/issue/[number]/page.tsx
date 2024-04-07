@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { dateTransform } from "@/lib/utils";
-import { getIssue, getIssueComments } from "@/lib/github-api";
+import { getUser, getIssue, getIssueComments } from "@/lib/github-api";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -43,6 +43,14 @@ export default async function IssuePage({
 }) {
   const session = await getServerSession(authOptions);
   const selectedRepo = searchParams.repo;
+  const { userInfo, getUserError } = await getUser({
+    owner: params.owner,
+  });
+
+  if (!userInfo || getUserError) {
+    throw new Error(getUserError);
+  }
+
   const { issue, getIssueError } = await getIssue({
     owner: params.owner,
     number: params.number,
@@ -73,7 +81,7 @@ export default async function IssuePage({
 
       <section className="flex items-center  py-9">
         <Image
-          src={issue.user.avatar_url}
+          src={userInfo.avatar_url}
           alt="Owner avatar"
           width={40}
           height={40}

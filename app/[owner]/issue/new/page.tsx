@@ -2,7 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { getUser } from "@/lib/github-api";
+import { getUserRepos } from "@/lib/github-api";
 import { GitHubRepo } from "@/lib/types/types";
 
 export async function generateMetadata() {
@@ -30,7 +30,7 @@ export default async function IssuePage({
     throw new Error("You are not authorized to create a new issue.");
   }
 
-  const { repos } = await getUser({
+  const { repos } = await getUserRepos({
     owner: params.owner,
   });
 

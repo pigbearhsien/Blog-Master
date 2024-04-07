@@ -34,8 +34,24 @@ async function fetchGitHubAPI(
   }
 }
 
-// Fetches public repositories for the specified user.
 export async function getUser({ owner }: GitHubIssue) {
+  const session = await getServerSession(authOptions);
+  const headers = session
+    ? { Authorization: `Bearer ${session.user.accessToken}` }
+    : {};
+  try {
+    const userInfo = await fetchGitHubAPI(`/users/${owner}`, {
+      method: "GET",
+      headers,
+    });
+    return { userInfo };
+  } catch (error) {
+    return { getUserError: getErrorMessage(error) };
+  }
+}
+
+// Fetches public repositories for the specified user.
+export async function getUserRepos({ owner }: GitHubIssue) {
   const session = await getServerSession(authOptions);
   const headers = session
     ? { Authorization: `Bearer ${session.user.accessToken}` }
@@ -57,13 +73,9 @@ export async function getUser({ owner }: GitHubIssue) {
       }
       page++;
     }
-    const userInfo = await fetchGitHubAPI(`/users/${owner}`, {
-      method: "GET",
-      headers,
-    });
-    return { repos, userInfo };
+    return { repos };
   } catch (error) {
-    return { getUserError: getErrorMessage(error) };
+    return { getUserReposError: getErrorMessage(error) };
   }
 }
 
