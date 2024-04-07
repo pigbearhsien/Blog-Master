@@ -128,6 +128,10 @@ Visit the website: https://blog-master-alpha.vercel.app/
 
 4. For more technical details, check out "[My Blog about Blog Master](https://blog-master-alpha.vercel.app/pigbearhsien/issue?repo=blog-master)".
 
+5. Lighthouse Score
+
+   ![image](https://github.com/pigbearhsien/blog-master/blob/main/public/Lighthouse.png)
+
 ## Installation
 
 **1. Download Repo.**
