@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
-import "@/components/styles/BlockNote.css";
+import "@/styles/block-note.css";
 
 type EditorProps = {
   initialTitle: string | undefined;

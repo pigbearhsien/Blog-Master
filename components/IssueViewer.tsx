@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
-import "@/components/styles/BlockNote.css";
+import "@/styles/block-note.css";
 
 export default function Viewer({ body }: { body: string | undefined }) {
   const editor = useCreateBlockNote({

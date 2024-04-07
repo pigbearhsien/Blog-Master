@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 import { Toaster } from "react-hot-toast";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
